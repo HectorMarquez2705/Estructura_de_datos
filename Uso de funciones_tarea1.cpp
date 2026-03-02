@@ -1,5 +1,3 @@
-'''cpp
-
 #include <iostream>
 #include <cmath>
 using namespace std;
@@ -98,8 +96,3 @@ void opcion_Peso() {
     
     cout << "El peso total de los productos es.- " << pesoTotal << " gramos." << endl;
 }
-
-
-
-'''
-
