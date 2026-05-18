@@ -1,0 +1,194 @@
+#define MAX 100
+
+class Pila
+{
+private:
+    int pila[MAX];
+    int cima;
+
+public:
+    Pila();
+    bool Apilar(int &elemento);
+    bool Desapilar();
+    bool CimaPila(int &elemento);
+    void LimpiarPila();
+    void VerPila();
+    bool PilaVacia();
+    bool Iguales(Pila p);
+};
+
+
+#include <iostream>
+#include "Pila.h"
+using namespace std;
+
+Pila::Pila()
+{
+    cima = -1;
+}
+
+bool Pila::Apilar(int &elemento)
+{
+    bool res;
+    if (cima == MAX - 1)
+    {
+        cout << "Desbordamiento de Pila (Overflow)" << endl;
+        res = false;
+    }
+    else
+
+    {
+        cima++;
+        pila[cima] = elemento;
+        res = true;
+    }
+    return res;
+
+
+}
+
+bool Pila::Desapilar()
+{
+    bool res;
+    if (cima == -1)
+    {
+        cerr << "Se esta intentando quitar un elemento de una pila vacia (underflow)" << endl;
+        res = false;
+    }
+    else
+
+    {
+        cima--;
+        res = true;
+    }
+    return res;
+
+
+}
+
+void Pila::VerPila()
+{
+    for (int i = 0; i <= cima; i++)
+        cout << pila[i] << endl;
+
+}
+
+
+bool Pila::CimaPila(int &elemento)
+{
+    bool res;
+    if (PilaVacia()) {
+        cerr << "Se esta intentando quitar un elemento de una pila vacia (underflow)" << endl;
+        res = false;
+    }
+    else {
+        elemento = pila[cima];
+        res = true;
+    }
+    return res;
+}
+
+bool Pila::PilaVacia()
+{
+    return cima == -1;
+}
+
+void Pila::LimpiarPila()
+{
+    cima = -1;
+}
+
+
+bool Pila::Iguales(Pila p)
+{
+    int a, b;
+    while (PilaVacia() == false && p.PilaVacia() == false)
+    {
+        CimaPila(a);
+        p.CimaPila(b);
+
+        if (a != b)
+            return false;
+
+        Desapilar();
+        p.Desapilar();
+    }
+    if (PilaVacia() == true && p.PilaVacia() == true)
+        return true;
+    else
+        return false;
+}
+
+
+#include <iostream>
+#include "Pila.h"
+#define MAX 100
+
+using namespace std;
+
+int main()
+{
+	int elemento = 2;
+	int elemento2 = 3;
+	int cima, pila[MAX], op;
+	Pila p, a, b;
+
+	do {
+		cout << "****** MENU PILA ******" << endl;
+		cout << "1. Apilar" << endl;
+		cout << "2. Desapilar" << endl;
+		cout << "3. CimaPila" << endl;
+		cout << "4. LimpiarPila" << endl;
+		cout << "5. VerPila" << endl;
+		cout << "6. PilaVacia" << endl;
+		cout << "7. Iguales" << endl;
+		cout << "0. Salir" << endl;
+		cout << "Seleccione una opcion: ";
+		cin >> op;
+		cout << endl;
+
+		switch (op) {
+			case 1:
+				cout << "Opcion Apilar." << endl;
+				break;
+			case 2:
+				cout << "Opcion Desapilar." << endl;
+				break;
+			case 3:
+				cout << "Opcion Cima Pila." << endl;
+				p.CimaPila(elemento);
+				break;
+			case 4:
+				cout << "Opcion Limpiar Pila." << endl;
+				a.LimpiarPila();
+				b.LimpiarPila();
+				break;
+			case 5:
+				cout << "Opcion Ver Pila." << endl;
+				p.VerPila();
+				break;
+			case 6:
+				cout << "Opcion Pila Vacia." << endl;
+				p.PilaVacia();
+				break;
+			case 7:
+				cout << "Opcion Iguales." << endl;
+				a.LimpiarPila();
+				b.LimpiarPila();
+				a.Apilar(elemento);
+				b.Apilar(elemento2);
+				if (a.Iguales(b))
+					cout << "Son iguales." << endl;
+				else
+					cout << "No son iguales." << endl;
+				cout << endl;
+				break;
+			case 0:
+				cout << "Gracias!" << endl;
+				break;
+			default:
+				cout << "Opcion no valida." << endl;
+		}
+	} while (op != 0);
+	return 0;
+}

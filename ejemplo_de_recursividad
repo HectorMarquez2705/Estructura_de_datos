@@ -1,0 +1,103 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+#include "stdlib.h"
+using namespace std;
+
+int factorial(int n);
+int baseadecimal(string numero, int base, int indice);
+int valor(char c);
+double serie(double x, int n);
+
+int main()
+{
+    int opcion, num, base, n;
+    string numero;
+    double x;
+
+    do {
+        cout << "Seleccione una opcion:" << endl;
+        cout << "1. Factorial" << endl;
+        cout << "2. Tranformar de base n a decimal" << endl;
+        cout << "3. Serie" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1: {
+            cout << "Ingrese el numero a calcular el factorial: "<<endl;
+            cin >> num;
+            cout << "El factorial de " << num << " es: " << factorial(num)<<endl;
+            break;
+        }
+
+        case 2: {
+            cout << "Ingrese el numero: ";
+            cin >> numero;
+            cout << "Ingrese la base: ";
+            cin >> base;
+            int resultado = baseadecimal(numero, base, 0);
+            cout << "En decimal es: " << resultado << endl;
+            break;
+        }
+
+        case 3: {
+            cout << "Ingresar x:";
+            cin >> x;
+            cout << "Ingresar n: ";
+            cin >> n;
+            cout << "El resultado de la serie es: " << serie(x, n) << endl;
+            break;
+        }
+
+        case 0: {
+            cout << "Hasta luego!" << endl;
+            break;
+        }
+
+        default:
+            cout << "Opcion no valida. Intenta de nuevo." << endl << endl;
+            break;
+        }
+        system("pause");
+        system("cls");
+    } 
+    while (opcion != 0);
+    
+    return 0;
+}
+
+int factorial(int n) {
+    if ((n == 0) || (n == 1))
+        return 1;
+    else
+        return factorial(n - 1) * n;
+}
+
+int valor(char c) {
+    if (c >= '0' && c <= '9')
+        return c - '0';
+    else if (c >= 'A' && c <= 'Z')
+        return c - 'A' + 10;
+    else if (c >= 'a' && c <= 'z')
+        return c - 'a' + 10;
+    return -1;
+}
+
+int baseadecimal(string numero, int base, int indice) {
+    if (indice == numero.length())
+        return 0;
+
+    int digito = valor(numero[indice]);
+    return digito * pow(base, numero.length() - indice - 1) + baseadecimal(numero, base, indice + 1);
+}
+
+double serie(double x, int n) {
+    if (n == 1) {
+        return x;
+    }
+    else {
+        return serie(x, n - 1) + pow(-1, n + 1) * pow(x, n) / factorial(n);
+    }
+}

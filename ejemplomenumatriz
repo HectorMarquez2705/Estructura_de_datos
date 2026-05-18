@@ -1,0 +1,106 @@
+#include <iostream>
+#include <iomanip>
+#define MAXCOL 20
+#define MAXROW 20
+
+using namespace std;
+void cargar(int matrix[MAXROW][MAXCOL], int n, int m);
+void mostrar(int matrix[MAXROW][MAXCOL], int n, int m);
+void cargarDiagonal(int matrix[MAXROW][MAXCOL], int n);
+
+int main()
+{
+    int tamrow, tamcol, matriz[MAXROW][MAXCOL], opcion;
+
+    do {
+        cout << "******MENU******" << endl;
+        cout << "1. Cargar matriz" << endl;
+        cout << "2. Mostrar matriz" << endl;
+        cout << "3. Cargar por diagonal" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Escoja una opcion: ";
+        cin >> opcion;
+        cout << endl << endl; 
+        switch (opcion) {
+        case 1:
+            cout << "Cargar matriz" << endl;
+            do {
+                cout << "Ingrese del numero de filas: ";
+                cin >> tamrow;
+            } while ((tamrow <= 0) || (tamrow > MAXROW));
+            do {
+                cout << "Ingrese del numero de columnas: ";
+                cin >> tamcol;
+            } while ((tamcol <= 0) || (tamcol > MAXCOL));
+            cargar(matriz, tamrow, tamcol);
+            cout << endl << endl;
+            break;
+        case 2:
+            cout << "Mostrar matriz" << endl;
+            mostrar(matriz, tamrow, tamcol);
+            cout << endl << endl;
+            break;
+        case 3:
+            cout << "Cargar una matriz cuadrada por diagonales con los primeros numeros naturales" << endl;
+            if(tamrow == tamcol)
+                cargarDiagonal(matriz, tamrow);
+            else
+                cout << "La matriz debe ser cuadrada (filas = columnas)";
+            cout << endl << endl;
+        break;
+        case 0:
+            cout << "Muchas gracias!" << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intenta de nuevo." << endl << endl;
+            break;
+        }
+    } while (opcion != 0);
+
+    return 0;
+}
+
+void cargar(int matrix[MAXROW][MAXCOL], int n, int m) {
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++) {
+            cout << "Matriz [" << i+1 << "]["<<j+1<<"]: ";
+            cin >> matrix[i][j];
+        }
+}
+
+void mostrar(int matrix[MAXROW][MAXCOL], int n, int m) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cout << setw(4) << matrix[i][j];
+        }
+        cout << endl;
+    }
+}
+
+void cargarDiagonal(int matrix[MAXROW][MAXCOL], int n) {
+    int num = 1;
+
+    for (int d = 0; d < n; d++) {
+        int i = 0;
+        int j = d;
+
+        while (j >= 0) {
+            matrix[i][j] = num;
+            num++;
+            i++;
+            j--;
+        }
+    }
+
+    for (int d = 1; d < n; d++) {
+        int i = d;
+        int j = n - 1;
+
+        while (i < n) {
+            matrix[i][j] = num;
+            num++;
+            i++;
+            j--;
+        }
+    }
+}

@@ -1,0 +1,206 @@
+//sofia olmos
+//clase Dato
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dato {
+public:
+    string titulo;
+    string autor;
+    string album;
+    int duracion;
+    char explicita;
+};
+
+//clase Nodo
+#include <iostream>
+#include "Dato.h"
+using namespace std;
+
+class Nodo {
+public:
+    Dato song;
+    Nodo* sig;
+};
+
+//clase Cola
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Cola {
+    Nodo* inicio;
+    Nodo* fin;
+
+public:
+    Cola();
+    void encolar();
+    void desencolar();
+    void mostrar();
+    void vacia();
+};
+
+//Cola.cpp
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include "Nodo.h"
+#include "Cola.h"
+
+using namespace std;
+
+Cola::Cola() {
+    inicio = NULL;
+    fin = NULL;
+}
+
+void Cola::encolar() {
+    Nodo* aux = new Nodo;
+
+    system("cls");
+    cout << "Titulo: ";
+    cin.ignore();
+    getline(cin, aux->song.titulo);
+
+    cout << "Autor: ";
+    getline(cin, aux->song.autor);
+
+    cout << "Album: ";
+    getline(cin, aux->song.album);
+
+    cout << "Duracion en segundos: ";
+    cin >> aux->song.duracion;
+
+    cout << "Explicita? (S o N): ";
+    cin >> aux->song.album;
+
+    aux->sig = NULL;
+
+    if (inicio == NULL) {
+        inicio = fin = aux;
+    }
+    else {
+        fin->sig = aux;
+        fin = aux;
+    }
+
+    cout << "\nElemento encolado correctamente!\n";
+    system("pause");
+}
+
+void Cola::desencolar() {
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        Nodo* temp = inicio;
+
+        system("cls");
+        cout << "Elemento eliminado:\n";
+        cout << temp->song.titulo << " - "
+            << temp->song.autor << " - "
+            << temp->song.album << " - "
+            << temp->song.duracion << " - "
+            << temp->song.explicita << "\n";
+
+        inicio = inicio->sig;
+
+        if (inicio == NULL) {
+            fin = NULL; // importante
+        }
+
+        delete temp; // liberar memoria
+
+        system("pause");
+    }
+}
+
+void Cola::mostrar() {
+    Nodo* aux = inicio;
+
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        system("cls");
+        cout << "Elementos en la cola:\n\n";
+
+        while (aux != NULL) {
+            cout << aux->song.titulo << " - "
+                << aux->song.autor << " - "
+                << aux->song.album << " - "
+                << aux->song.duracion << " - "
+                << aux->song.explicita << "\n";
+            aux = aux->sig;
+        }
+
+        system("pause");
+    }
+}
+
+void Cola::vacia() {
+    system("cls");
+
+    if (inicio == NULL)
+        cout << "La cola esta vacia\n";
+    else
+        cout << "La cola tiene elementos\n";
+
+    system("pause");
+}
+
+//main
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include "Nodo.h"
+#include "Cola.h"
+
+using namespace std;
+
+int main() {
+    Cola c;
+    int opcion;
+
+    do {
+        system("cls");
+        cout << "****MENU DE CANCIONES****\n";
+        cout << "[:] Cola en lista enlazada\n";
+        cout << "[1] Encolar cancion\n";
+        cout << "[2] Desencolar cancion\n";
+        cout << "[3] Mostrar canciones\n";
+        cout << "[4] Cola vacia?\n";
+        cout << "[0] Salir\n";
+        cout << "\nIngresa tu opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            c.encolar();
+            break;
+        case 2:
+            c.desencolar();
+            break;
+        case 3:
+            c.mostrar();
+            break;
+        case 4:
+            c.vacia();
+            break;
+        case 0:
+            return 0;
+        default:
+            cout << "Opcion incorrecta\n";
+            system("pause");
+            break;
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}

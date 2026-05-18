@@ -1,0 +1,126 @@
+#include <iostream>
+#include <cmath>
+#include "stdlib.h" //libreria para correr comandos de windows
+using namespace std;
+
+int suma(int a, int b); //prototipos
+int mayor(int c, int d, int e);
+double ciclo(int x);
+double pesototal(int cantidadProductos);
+
+
+int main() {
+    int opcion, a, b, c, d, e, result;
+    system("color D");
+
+    do {
+        cout << "Elige una opcion:" << endl;
+        cout << "1. La suma de dos numeros" << endl;
+        cout << "2. Determinar el mayor de tres numeros" << endl;
+        cout << "3. Calcular la serie con ciclo For" << endl;
+        cout << "4. Calcular el peso total de productos" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1: {
+            cout << "Ingresar el primer numero: ";
+            cin >> a;
+            cout << "Ingresar el segundo numero:";
+            cin >> b;
+            result = suma(a, b); //llamado de la funcion
+            cout << "La suma de los dos numeros es: " << result << endl<< endl;
+            break;
+        }
+        
+        case 2: {
+            cout << "Introduce el primer numero: ";
+            cin >> c;
+            cout << "Introduce el segundo numero: ";
+            cin >> d;
+            cout << "Introduce el tercer numero: ";
+            cin >> e;
+            mayor(c, d, e);
+            cout << endl;
+            break;
+        }
+        case 3: {
+            int x;
+            cout << "Introduce el valor de x: ";
+            cin >> x;
+            cout << "La suma total de la serie es: " << ciclo(x) << endl<< endl;
+            break;
+        }
+        case 4: {
+            int cantidad;
+            cout << "Cuantos productos deseas ingresar? ";
+            cin >> cantidad;
+            pesototal(cantidad);
+            cout << endl;
+            break;
+        }
+        case 0:
+            cout << "Hasta luego!" << endl;
+            break;
+        default:
+            cout << "Opcion no valida. Intenta de nuevo." << endl<< endl;
+            break;
+        }
+        system("pause");
+        system("cls");
+    } while (opcion != 0);
+
+    return 0;
+}
+
+
+int suma(int a, int b) { //declaracion
+    return a + b;
+}
+
+
+int mayor(int c, int d, int e) {
+
+    if (c == d && d == e) {
+        cout << "Todos los numeros son iguales.";
+        return c;
+    }
+    else if (c >= d && c >= e) {
+        cout << "El mayor numero es: " << c << endl;
+        return c;
+    }
+    else if (d >= c && d >= e) {
+        cout << "El mayor numero es: " << d << endl;
+        return d;
+    }
+    else {
+        cout << "El mayor numero es: " << e << endl;
+        return e;
+    }
+}
+
+
+double ciclo(int x) {
+    double suma = 0;
+
+    for (int b = 1; b <= 10; ++b) {
+        suma += pow(x, b);
+    }
+    return suma;
+}
+
+
+double pesototal(int cantidadProductos) {
+    double pesoTotal = 0.0;
+
+    for (int i = 1; i <= cantidadProductos; i++) {
+        double peso;
+        cout << "Ingresa el peso del producto " << i << " (en gramos): " << endl;
+        cin >> peso;
+        pesoTotal += peso;
+    }
+
+    cout << "El peso total de los productos es: " << pesoTotal << " gramos." << endl;
+    return pesoTotal;
+}

@@ -1,0 +1,132 @@
+#include <iostream>
+using namespace std;
+#define MAX_SIZE 256 /* capacidad máxima */
+typedef char almacen[MAX_SIZE];
+
+class Cola {
+
+    int cabeza; /* puntero de lectura */
+    int cola; /* puntero de escritura */
+    int ITEMS; /* número de elementos en la lista */
+    int ITEMSIZE; /* tamaño de cada elemento */
+    almacen alma; /* el almacen */
+
+public:
+    // constructor
+    Cola();
+
+    // destructor
+    ~Cola();
+
+    // regresa 1 (true) si la lista está vacia
+    int empty();
+
+    // insertar elemento a la lista
+    int put(int d);
+
+    // retirar elemento de la lista
+    int get();
+
+    // regresa el n£mero de elementos en lista
+    int size();
+
+    void verCola();
+
+}; // fin de la clase Queue
+
+#include "Cola.h"
+
+Cola::Cola() {
+    cabeza = 0;
+    cola = 0;
+    ITEMS = 0;
+    ITEMSIZE = 1;
+}
+
+// destructor
+Cola::~Cola() {}
+
+// regresa 1 (true) si la lista está vacia
+int Cola::empty() { return ITEMS == 0; }
+
+// insertar elemento a la lista
+int Cola::put(int d)
+{
+    if (ITEMS == MAX_SIZE) return -1;
+    if (cola >= MAX_SIZE) { cola = 0; }
+    alma[cola] = d;
+    cola++;
+    ITEMS++;
+    return d;
+}
+
+// retirar elemento de la lista
+int Cola::get()
+{
+    char d;
+    if (empty()) return -1;
+    if (cabeza >= MAX_SIZE) { cabeza = 0; }
+    d = alma[cabeza];
+    cabeza++;
+    ITEMS--;
+    return d;
+}
+
+// regresa el numero de elementos en lista
+int Cola::size() { return ITEMS; }
+
+ // fin de la clase Queue
+
+void Cola::verCola() {
+    for (int i = cabeza;i < cola;i++) {
+        cout << "Item " << i << ": " << alma[i]<<endl;
+    }
+}
+// ejemploCola.cpp 
+//
+
+#include <iostream>
+#include "Cola.h"
+using namespace std;
+int main()
+{
+    Cola q;
+    int opcion = -1;
+    char d;
+    do {
+        cout << "----- MENU -----" << endl;
+        cout << "1. Llenar cola"<<endl;
+        cout << "2. Desencolar" << endl;
+        cout << "3. Mostrar cola"<<endl;
+        cout << "4. Mostrar tamano de cola" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Seleccione una opcion:";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            cout << "Ingrese el elemento: " << endl;
+            cin >> d;
+            q.put(d);
+            break;
+        case 2:
+            q.get();
+            break;
+        case 3:
+            q.verCola();
+            break;
+        case 4:
+            cout<<q.size()<<endl;
+            break;
+        case 0:
+            cout << "Saliendo..." << endl;
+            break;
+        default:
+            cout << "Ingresar opcion valida"<<endl;
+        }
+    } while (opcion != 0);
+
+    cout << "\nPara terminar oprima <Enter> ...";
+    cin.get();
+    return 0;
+}

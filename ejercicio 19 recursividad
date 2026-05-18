@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+int valor(char c); //PROTOTIPOS
+int baseADecimal(string numero, int base, int indice);
+
+int main() {
+    string numero;
+    int base;
+
+    cout << "Ingrese el numero: ";
+    cin >> numero;
+
+    cout << "Ingrese la base: ";
+    cin >> base;
+
+    int resultado = baseADecimal(numero, base, 0);
+
+    cout << "En decimal es: " << resultado << endl;
+
+    return 0;
+}
+
+
+int valor(char c) {
+    if (c >= '0' && c <= '9')
+        return c - '0';
+    else if (c >= 'A' && c <= 'Z')
+        return c - 'A' + 10;
+    else if (c >= 'a' && c <= 'z')
+        return c - 'a' + 10;
+    return -1; 
+}
+
+int baseADecimal(string numero, int base, int indice) {
+    // Caso base
+    if (indice == numero.length())
+        return 0;
+
+    int digito = valor(numero[indice]); //recursividad utiliza la funcion valor
+
+    return digito * pow(base, numero.length() - indice - 1)
+           + baseADecimal(numero, base, indice + 1); //recursividad se llama a si misma
+}
+
+
+//ejercicio 19 de clase

@@ -1,0 +1,387 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+#define MAX 100
+
+class Vector{
+
+private:
+    int vec[MAX];
+    int vec2[MAX];
+    int n;
+
+public:
+    Vector();
+
+    void cargarVector();
+    void mostrarVector();
+
+    int maximoVector();              // 1
+    int minimoVector();              // 2
+    double promedio();               // 3
+
+    void revertirVector();           // 13
+    void revertirEnOtro();           // 4
+    bool esCapicua();                // 5
+
+    void promedio3();                // 6
+    void numeroLiteral(int n);       // 7
+    void mayorDiferencia();          // 8
+
+    void concatenar();               // 9
+    void intercalar();               // 10
+
+    void contarValores();            // 11
+    void eliminarDuplicados();       // 12
+
+    void ordenarVector();            // 14
+
+    void top3();                     // 15
+    void menuAlumnos();              // 16
+
+    void fibonacci();                // 17
+};
+
+#include "vector.h"
+
+Vector::Vector(){
+    n=0;
+}
+
+void Vector::cargarVector(){
+
+    cout<<"Tamaño: ";
+    cin>>n;
+
+    for(int i=0;i<n;i++){
+        cin>>vec[i];
+    }
+}
+
+void Vector::mostrarVector(){
+
+    for(int i=0;i<n;i++){
+        cout<<vec[i]<<" ";
+    }
+    cout<<endl;
+}
+
+//1
+int Vector::maximoVector(){
+
+    int max=vec[0];
+
+    for(int i=1;i<n;i++){
+        if(vec[i]>max)
+            max=vec[i];
+    }
+
+    return max;
+}
+
+//2
+int Vector::minimoVector(){
+
+    int min=vec[0];
+
+    for(int i=1;i<n;i++){
+        if(vec[i]<min)
+            min=vec[i];
+    }
+
+    return min;
+}
+
+//3
+double Vector::promedio(){
+
+    int suma=0;
+
+    for(int i=0;i<n;i++){
+        suma+=vec[i];
+    }
+
+    return (double)suma/n;
+}
+
+//4
+void Vector::revertirEnOtro(){
+
+    for(int i=0;i<n;i++){
+        vec2[i]=vec[n-1-i];
+    }
+
+    cout<<"Vector invertido: ";
+    for(int i=0;i<n;i++){
+        cout<<vec2[i]<<" ";
+    }
+    cout<<endl;
+}
+
+//13
+void Vector::revertirVector(){
+
+    for(int i=0;i<n/2;i++){
+
+        int aux=vec[i];
+        vec[i]=vec[n-1-i];
+        vec[n-1-i]=aux;
+    }
+}
+
+//5
+bool Vector::esCapicua(){
+
+    for(int i=0;i<n/2;i++){
+
+        if(vec[i]!=vec[n-1-i])
+            return false;
+    }
+
+    return true;
+}
+
+//6
+void Vector::promedio3(){
+
+    double p;
+
+    for(int i=0;i<n-2;i++){
+
+        p=(vec[i]+vec[i+1]+vec[i+2])/3.0;
+
+        cout<<"P"<<i+1<<" = "<<p<<endl;
+    }
+}
+
+//7
+void Vector::numeroLiteral(int n){
+
+    switch(n){
+
+        case 0: cout<<"CERO"; break;
+        case 1: cout<<"UNO"; break;
+        case 2: cout<<"DOS"; break;
+        case 3: cout<<"TRES"; break;
+        case 4: cout<<"CUATRO"; break;
+        case 5: cout<<"CINCO"; break;
+        case 6: cout<<"SEIS"; break;
+        case 7: cout<<"SIETE"; break;
+        case 8: cout<<"OCHO"; break;
+        case 9: cout<<"NUEVE"; break;
+        case 10: cout<<"DIEZ"; break;
+        case 11: cout<<"ONCE"; break;
+        case 12: cout<<"DOCE"; break;
+        case 13: cout<<"TRECE"; break;
+        case 14: cout<<"CATORCE"; break;
+        case 15: cout<<"QUINCE"; break;
+        case 16: cout<<"DIECISEIS"; break;
+        case 17: cout<<"DIECISIETE"; break;
+        case 18: cout<<"DIECIOCHO"; break;
+        case 19: cout<<"DIECINUEVE"; break;
+        case 20: cout<<"VEINTE"; break;
+        default: cout<<"Fuera de rango";
+    }
+
+    cout<<endl;
+}
+
+//8
+void Vector::mayorDiferencia(){
+
+    float mayor=0;
+
+    for(int i=0;i<n-1;i++){
+
+        float dif=abs(vec[i+1]-vec[i]);
+
+        if(dif>mayor)
+            mayor=dif;
+    }
+
+    cout<<"Mayor diferencia: "<<mayor<<endl;
+}
+
+//9
+void Vector::concatenar(){
+
+    int m;
+
+    cout<<"Tamaño segundo vector: ";
+    cin>>m;
+
+    for(int i=0;i<m;i++)
+        cin>>vec2[i];
+
+    for(int i=0;i<m;i++)
+        vec[n+i]=vec2[i];
+
+    n=n+m;
+}
+
+//10
+void Vector::intercalar(){
+
+    int m;
+    int b[MAX],c[MAX];
+
+    cout<<"Tamaño segundo vector: ";
+    cin>>m;
+
+    for(int i=0;i<m;i++)
+        cin>>b[i];
+
+    int i=0,j=0,k=0;
+
+    while(i<n && j<m){
+
+        if(vec[i]<=b[j])
+            c[k++]=vec[i++];
+        else
+            c[k++]=b[j++];
+    }
+
+    while(i<n)
+        c[k++]=vec[i++];
+
+    while(j<m)
+        c[k++]=b[j++];
+
+    cout<<"Resultado: ";
+    for(int t=0;t<k;t++)
+        cout<<c[t]<<" ";
+}
+
+//11
+void Vector::contarValores(){
+
+    int pos=0,neg=0,cero=0;
+
+    for(int i=0;i<n;i++){
+
+        if(vec[i]>0)
+            pos++;
+
+        else if(vec[i]<0)
+            neg++;
+
+        else
+            cero++;
+    }
+
+    cout<<"Positivos "<<pos<<endl;
+    cout<<"Negativos "<<neg<<endl;
+    cout<<"Ceros "<<cero<<endl;
+}
+
+//12
+void Vector::eliminarDuplicados(){
+
+    for(int i=0;i<n;i++){
+
+        for(int j=i+1;j<n;j++){
+
+            if(vec[i]==vec[j]){
+
+                for(int k=j;k<n-1;k++)
+                    vec[k]=vec[k+1];
+
+                n--;
+                j--;
+            }
+        }
+    }
+}
+
+//14
+void Vector::ordenarVector(){
+
+    for(int i=0;i<n-1;i++){
+
+        for(int j=i+1;j<n;j++){
+
+            if(vec[i]>vec[j]){
+
+                int aux=vec[i];
+                vec[i]=vec[j];
+                vec[j]=aux;
+            }
+        }
+    }
+}
+
+//17
+void Vector::fibonacci(){
+
+    cout<<"Cantidad: ";
+    cin>>n;
+
+    vec[0]=0;
+    vec[1]=1;
+
+    for(int i=2;i<n;i++)
+        vec[i]=vec[i-1]+vec[i-2];
+
+    mostrarVector();
+}
+
+#include <iostream>
+using namespace std;
+#include "vector.h"
+
+int main(){
+
+    Vector v;
+    int op,n;
+
+    do{
+
+        cout<<"\nMENU\n";
+        cout<<"1 Cargar vector\n";
+        cout<<"2 Mostrar vector\n";
+        cout<<"3 Maximo\n";
+        cout<<"4 Minimo\n";
+        cout<<"5 Promedio\n";
+        cout<<"6 Revertir en otro\n";
+        cout<<"7 Capicua\n";
+        cout<<"8 Promedio de 3\n";
+        cout<<"9 Numero literal\n";
+        cout<<"10 Mayor diferencia\n";
+        cout<<"11 Concatenar\n";
+        cout<<"12 Intercalar\n";
+        cout<<"13 Contar valores\n";
+        cout<<"14 Eliminar duplicados\n";
+        cout<<"15 Revertir mismo vector\n";
+        cout<<"16 Ordenar\n";
+        cout<<"17 Fibonacci\n";
+        cout<<"0 Salir\n";
+
+        cin>>op;
+
+        switch(op){
+
+        case 1: v.cargarVector(); break;
+        case 2: v.mostrarVector(); break;
+        case 3: cout<<v.maximoVector()<<endl; break;
+        case 4: cout<<v.minimoVector()<<endl; break;
+        case 5: cout<<v.promedio()<<endl; break;
+        case 6: v.revertirEnOtro(); break;
+        case 7: cout<<(v.esCapicua()?"SI":"NO")<<endl; break;
+        case 8: v.promedio3(); break;
+        case 9: cin>>n; v.numeroLiteral(n); break;
+        case 10: v.mayorDiferencia(); break;
+        case 11: v.concatenar(); break;
+        case 12: v.intercalar(); break;
+        case 13: v.contarValores(); break;
+        case 14: v.eliminarDuplicados(); break;
+        case 15: v.revertirVector(); break;
+        case 16: v.ordenarVector(); break;
+        case 17: v.fibonacci(); break;
+
+        }
+
+    }while(op!=0);
+
+    return 0;
+}
